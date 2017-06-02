@@ -1,0 +1,47 @@
+/* The database of the aliases of the spammer well-known as [name skipped].
+The purpose of creation: to track any new account registrations by this spammer in any of the hosting company's projects 
+and prevent spamming activity from the company's servers. */
+
+
+/* Creating a table called TableName within a DB */
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS TableName (
+ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+Ticket INT, 
+FirstName NVARCHAR(50),
+LastName NVARCHAR(50),
+CompanyName NVARCHAR(100),
+DomainName NVARCHAR(100),
+Email NVARCHAR(100), 
+Address NVARCHAR(100), 
+Phone NVARCHAR(50), 
+Project1 NVARCHAR(5), 
+Project2 NVARCHAR(5), 
+Project3 NVARCHAR(5), 
+Project4 NVARCHAR(5), 
+FraudRecord NVARCHAR(5), 
+Spamhaus_ROKSO NVARCHAR(5), 
+Other NVARCHAR(100), 
+);
+COMMIT TRANSACTION;
+
+
+/* "Project[1,2,3,4]" fields are names of the projects (hosting companies) within the Holding, where the specified spammer's details could be used for account registration.
+"Project[1,2,3,4]", "FraudRecord", "Spamhaus_ROKSO" and "Other" fields imply the source (and so, the level of credibility) 
+of info about the spammer's alias; 
+"Project" data format: Yes/No, "Other" data format: source name.
+Proof field may include URLs of the source of any evidence or additional information. */
+
+
+/* Example of creating a record in the table */
+BEGIN TRANSACTION;
+INSERT INTO TableName (Ticket, FirstName, LastName, DomainName, Email, Address, Phone, Project1, FraudRecord, Spamhaus_ROKSO)
+VALUES (123456, 'Jane', 'Doe', 'domain.com', 'jane.doe@domain.com', '456 South Michigan Ave Suite 1234, 60611 Chicago, US', '+1.1234567890', 'Yes', 'Yes', 'Yes');
+COMMIT TRANSACTION;
+
+
+/* Displaying all the records from the table */
+SELECT * FROM TableName;
+
+/* Retrieving data using a wildcard (example) */
+SELECT * FROM TableName WHERE Email LIKE '%word_or_letters%';
